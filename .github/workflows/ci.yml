@@ -20,7 +20,15 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
+
+      - name: Setup npm
+        run: npm install -g npm@11.13.0
+
+      - name: Check Node and npm Versions
+        run: |
+          node --version
+          npm --version
 
       - name: Install Backend Dependencies
         working-directory: ./backend
