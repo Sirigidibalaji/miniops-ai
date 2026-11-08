@@ -1,8 +1,25 @@
 function Navbar() {
   return (
     <nav className="navbar">
-      <h2>🚀 MiniOps AI</h2>
-      <span>Intelligent DevOps Monitoring</span>
+      <div className="navbar-brand">
+        <div className="navbar-logo">M</div>
+
+        <div className="navbar-title">
+          <h2>MiniOps <span>AI</span></h2>
+          <p>Intelligent DevOps Platform</p>
+        </div>
+      </div>
+
+      <div className="navbar-right">
+        <div className="navbar-live">
+          <span className="live-dot"></span>
+          System Monitoring
+        </div>
+
+        <div className="navbar-version">
+          v1.0
+        </div>
+      </div>
     </nav>
   );
 }

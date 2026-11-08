@@ -54,7 +54,6 @@ function Dashboard() {
   const handleAIAnalysis = async () => {
     try {
       setLoading(true);
-
       const response = await analyzeLogs();
 
       setAiAnalysis(
@@ -83,23 +82,33 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-
       <Navbar />
 
       <main className="dashboard-content">
 
-        <h1>DevOps Monitoring Dashboard</h1>
+        <header className="dashboard-header">
+          <div>
+            <span className="eyebrow">INFRASTRUCTURE OVERVIEW</span>
+            <h1>Command Center</h1>
+            <p>
+              Monitor your infrastructure and resolve incidents
+              intelligently with MiniOps AI.
+            </p>
+          </div>
 
-        <p>
-          Monitor your infrastructure intelligently with MiniOps AI.
-        </p>
+          <div className="system-status">
+            <span className="status-indicator"></span>
+            Monitoring Dashboard
+          </div>
+        </header>
 
         {error && (
-          <p style={{ color: "#f87171" }}>{error}</p>
+          <div className="error-banner">
+            {error}
+          </div>
         )}
 
-        <div className="stats-grid">
-
+        <section className="stats-grid">
           <StatCard
             title="Total Websites"
             value={totalWebsites}
@@ -107,54 +116,86 @@ function Dashboard() {
           />
 
           <StatCard
-            title="Websites UP"
+            title="Websites Online"
             value={upWebsites}
-            icon="✅"
+            icon="✓"
           />
 
           <StatCard
-            title="Websites DOWN"
+            title="Websites Offline"
             value={downWebsites}
-            icon="🔴"
+            icon="!"
           />
 
           <StatCard
             title="Open Incidents"
             value={openIncidents}
-            icon="🚨"
+            icon="⚠"
           />
+        </section>
 
-        </div>
+        <section className="dashboard-actions">
+          <div>
+            <h2>Quick Actions</h2>
+            <p>Manage your infrastructure operations.</p>
+          </div>
 
-        <div className="action-buttons">
+          <div className="action-buttons">
+            <button
+              className="btn-primary"
+              onClick={handleMonitoring}
+              disabled={loading}
+            >
+              {loading ? "Processing..." : "▶ Run Monitoring"}
+            </button>
 
-          <button onClick={handleMonitoring} disabled={loading}>
-            {loading ? "Processing..." : "Run Monitoring"}
-          </button>
+            <button
+              className="btn-ai"
+              onClick={handleAIAnalysis}
+              disabled={loading}
+            >
+              ✦ Analyze with AI
+            </button>
 
-          <button onClick={handleAIAnalysis} disabled={loading}>
-            Analyze Logs with AI
-          </button>
+            <button
+              className="btn-secondary"
+              onClick={fetchDashboardData}
+              disabled={loading}
+            >
+              ↻ Refresh
+            </button>
+          </div>
+        </section>
 
-          <button onClick={fetchDashboardData} disabled={loading}>
-            Refresh Dashboard
-          </button>
+        <section className="dashboard-panel">
+          <WebsiteTable
+            websites={websites}
+            onRefresh={fetchDashboardData}
+          />
+        </section>
 
-        </div>
-
-        <WebsiteTable
-          websites={websites}
-          onRefresh={fetchDashboardData}
-        />
-
-        <IncidentList incidents={incidents} />
+        <section className="dashboard-panel">
+          <IncidentList incidents={incidents} />
+        </section>
 
         {aiAnalysis && (
           <section className="ai-analysis">
-            <h2>🤖 Gemini AI Incident Analysis</h2>
+            <div className="ai-heading">
+              <span>✦</span>
+              <div>
+                <h2>Gemini AI Analysis</h2>
+                <p>Intelligent incident insights</p>
+              </div>
+            </div>
+
             <pre>{aiAnalysis}</pre>
           </section>
         )}
+
+        <footer className="dashboard-footer">
+          <span>MiniOps AI</span>
+          <span>Intelligent DevOps Monitoring Platform</span>
+        </footer>
 
       </main>
     </div>
